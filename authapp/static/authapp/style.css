@@ -1,0 +1,28 @@
+.login_container {
+	width: 420px;
+	margin: 30px auto 0;
+}
+
+.messages {
+	position: absolute;
+	z-index: 1;
+	top: 50px;
+	right: 50px;
+	list-style: none;
+}
+
+.messages > li {
+	padding: 10px 15px;
+	margin-bottom: 20px;
+	border-radius: 3px;
+	font-weight: bold;
+	list-style: none;
+}
+
+.success {
+	background: rgb(197, 235, 197);
+}
+
+.error {
+	background: rgb(255, 234, 234);
+}

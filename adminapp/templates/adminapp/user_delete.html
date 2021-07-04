@@ -1,0 +1,22 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="w-50 ml-3">
+  <div class="card">
+    <div class="card-body">
+      Вы точно хотите удалить пользователя {{ user_to_delete.username }} ?
+    </div>
+  </div>
+  <form class="form-horizontal" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-round btn-danger" value="Удалить"/>
+  </form>
+
+  <button class="btn btn-round btn-secondary">
+    <a href="{% url 'admin_staff:users' %}">
+      к списку пользователей
+    </a>
+  </button>
+</div>
+{% endblock %}

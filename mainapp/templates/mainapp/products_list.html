@@ -1,0 +1,95 @@
+{% extends 'geekshop/base.html' %}
+
+{% load static %}
+
+{% block main_slider %}
+  <div class="container_wrapper">
+    <div class="hero-white">
+      {% include 'geekshop/includes/inc_main_menu.html' %}
+    </div>
+{% endblock %}
+{% block content %}
+
+    <div class="details">
+      <div class="links clearfix">
+        <ul class="links-menu">
+          <li>
+            <a href="{% url 'products:category' 0 %}"
+               class="{% if request.resolver_match.kwargs.pk == '0' %}active{% endif %}">все</a>
+          </li>
+          {% for link in categories %}
+          <li>
+            <a href="{% url 'products:category' link.pk %}"
+               class="{% if request.resolver_match.kwargs.pk == link.pk %}active{% endif %}">{{ link.name }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+       
+      <div class="section flex margin-30">
+        <div>
+          <div class="slider-product text-center">
+            <img src="/media/{{ hot_product.image }}" class="w-50">
+          </div>
+          <div class="slider-control ml-2 my-3 d-flex text-center">
+            <div class="block">
+              <a href="#"><img src="/media/{{ hot_product.image }}" alt="" class="w-25"></a>
+            </div>
+            <div class="block">
+              <a href="#"><img src="/media/{{ hot_product.image }}" alt="" class="w-25"></a>
+            </div>
+            <div class="block">
+              <a href="#"><img src="/media/{{ hot_product.image }}" alt="" class="w-25"></a>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="big-bold">{{ hot_product.name }}</h3>
+          <h3 class="red">горячее предложение</h3>
+          <p class="price">{{ hot_product.price }} <span>руб</span></p>
+          <a href="{% url 'basket:add' hot_product.pk %}" class="red-button">
+            заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </a>
+          <div class="description-text">
+            {{ hot_product.description }}
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>
+          Категория: {{ category.name }}
+        </h2>
+        <div class="paginator">
+          {% if products.has_previous %}
+          <a href="{% url 'products:page' category.pk products.previous_page_number %}"><</a>
+          {% endif %}
+        <span class="current">
+          страница {{ products.number }} из {{ products.paginator.num_pages }}
+        </span>
+          {% if products.has_next %}
+          <a href="{% url 'products:page' category.pk products.next_page_number %}">></a>
+          {% endif %}
+        </div>
+        <div class="category-products row">
+          {% for product in products %}
+            <div class="block w-25 my-3 mx-3">
+              <a href="{% url 'products:product' product.pk %}">
+                <img src="/media/{{ product.image }}" alt="{{ product.short_desc }}" class="w-50">
+                <div class="text">
+                  <img src="{% static 'img/icon-hover.png' %}" alt="hover">
+                  <h4>{{ product.name }}</h4>
+                  <p>{{ product.description }} </p>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+{% endblock %}

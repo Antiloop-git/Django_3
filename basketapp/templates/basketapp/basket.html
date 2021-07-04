@@ -1,0 +1,25 @@
+{% extends 'geekshop/base.html' %}
+{% load static %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block js %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'basketapp/js/script.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'basketapp/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="" style="padding-left: 98px; padding-right: 211px; position: relative;">
+	{% include 'geekshop/includes/inc_main_menu.html' %}
+    {% if user.is_authenticated %}
+        <div class="container_wrapper">
+            <div class="basket_list">
+                {% include 'basketapp/includes/inc_basket_list.html' %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
