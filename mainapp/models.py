@@ -43,7 +43,7 @@ class Product(models.Model):
         verbose_name='фото товара',
     )
     short_desc = models.CharField(
-        verbose_name='карткое описание товара',
+        verbose_name='краткое описание товара',
         max_length=60,
         blank=True,
     )

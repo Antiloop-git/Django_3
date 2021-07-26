@@ -40,7 +40,7 @@ class Basket(models.Model):
     def total_cost(self):
         _items = Basket.objects.filter(user=self.user)
         _total_cost = sum([x.product_cost for x in _items])
-        return _total_cost\
+        return _total_cost
 
     @staticmethod
     def get_item(pk):
