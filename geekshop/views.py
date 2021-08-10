@@ -7,7 +7,8 @@ from mainapp.models import Product
 def index(request):
     basket = []
     if request.user.is_authenticated:
-        basket = Basket.objects.filter(user=request.user)
+        # basket = Basket.objects.filter(user=request.user)
+        basket = Basket.objects.select_related().all()
 
     title = 'geekshop'
     products = Product.objects.all()[:4]

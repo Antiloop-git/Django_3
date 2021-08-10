@@ -10,12 +10,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def get_basket(user):
     if user.is_authenticated:
         return Basket.objects.filter(user=user)
+        #return Basket.objects.select_related('user')
     else:
         return []
 
 
 def get_hot_product():
-    products = Product.objects.all()
+    # products = Product.objects.all()
+    products = Product.objects.select_related().all()
 
     return random.sample(list(products), 1)[0]
 
@@ -35,6 +37,7 @@ def products(request, pk=None, page=1):
 
     categories = ProductCategory.objects.all()
     basket = get_basket(request.user)
+    # basket = Basket.objects.select_related('user')
 
     if pk is not None:
         if pk == 0:
