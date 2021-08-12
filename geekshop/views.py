@@ -3,7 +3,10 @@ from django.shortcuts import render
 from basketapp.models import Basket
 from mainapp.models import Product
 
+from django.views.decorators.cache import cache_page
 
+
+@cache_page(3600)
 def index(request):
     basket = []
     if request.user.is_authenticated:

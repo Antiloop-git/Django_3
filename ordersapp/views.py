@@ -67,7 +67,8 @@ class OrderItemsCreate(CreateView):
                 orderitems.save()
 
         # удаляем пустой заказ
-        if self.object.get_total_cost() == 0:
+        # if self.object.get_total_cost() == 0:
+        if self.object.get_summary == 0:
             self.object.delete()
 
         return super(OrderItemsCreate, self).form_valid(form)
@@ -112,7 +113,8 @@ class OrderItemsUpdate(UpdateView):
                 orderitems.save()
 
         # удаляем пустой заказ
-        if self.object.get_total_cost() == 0:
+        # if self.object.get_total_cost() == 0:
+        if self.object.get_summary() == 0:
             self.object.delete()
 
         return super(OrderItemsUpdate, self).form_valid(form)
@@ -143,14 +145,13 @@ def order_forming_complete(request, pk):
 @receiver(pre_save, sender=OrderItem)
 @receiver(pre_save, sender=Basket)
 def product_quantity_update_save(sender, update_fields, instance, **kwargs):
-   if update_fields is 'quantity' or 'product':
-       if instance.pk:
-           instance.product.quantity -= instance.quantity - sender.get_item(instance.pk).quantity
-           # instance.product.quantity -= instance.quantity - instance.__class__.getitem(instance.pk).quantity
-
-       else:
-           instance.product.quantity -= instance.quantity
-       instance.product.save()
+    if update_fields == 'quantity' or 'product':
+        if instance.pk:
+            instance.product.quantity -= instance.quantity - sender.get_item(instance.pk).quantity
+            # instance.product.quantity -= instance.quantity - instance.__class__.getitem(instance.pk).quantity
+        else:
+            instance.product.quantity -= instance.quantity
+    instance.product.save()
 
 
 
