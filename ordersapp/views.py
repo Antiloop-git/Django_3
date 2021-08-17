@@ -21,6 +21,7 @@ class OrderList(ListView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
+        # return Order.objects.select_related(order='user')
 
 
 class OrderItemsCreate(CreateView):
@@ -66,7 +67,8 @@ class OrderItemsCreate(CreateView):
                 orderitems.save()
 
         # удаляем пустой заказ
-        if self.object.get_total_cost() == 0:
+        # if self.object.get_total_cost() == 0:
+        if self.object.get_summary == 0:
             self.object.delete()
 
         return super(OrderItemsCreate, self).form_valid(form)
@@ -88,7 +90,10 @@ class OrderItemsUpdate(UpdateView):
         if self.request.POST:
             data['orderitems'] = OrderFormSet(self.request.POST, instance=self.object)
         else:
-            formset = OrderFormSet(instance=self.object)
+            # formset = OrderFormSet(instance=self.object)
+            queryset = self.object.orderitems.select_related()
+            formset = OrderFormSet(instance=self.object, queryset=queryset)
+
             for form in formset.forms:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price
@@ -108,7 +113,8 @@ class OrderItemsUpdate(UpdateView):
                 orderitems.save()
 
         # удаляем пустой заказ
-        if self.object.get_total_cost() == 0:
+        # if self.object.get_total_cost() == 0:
+        if self.object.get_summary() == 0:
             self.object.delete()
 
         return super(OrderItemsUpdate, self).form_valid(form)
@@ -139,14 +145,13 @@ def order_forming_complete(request, pk):
 @receiver(pre_save, sender=OrderItem)
 @receiver(pre_save, sender=Basket)
 def product_quantity_update_save(sender, update_fields, instance, **kwargs):
-   if update_fields is 'quantity' or 'product':
-       if instance.pk:
-           instance.product.quantity -= instance.quantity - sender.get_item(instance.pk).quantity
-           # instance.product.quantity -= instance.quantity - instance.__class__.getitem(instance.pk).quantity
-
-       else:
-           instance.product.quantity -= instance.quantity
-       instance.product.save()
+    if update_fields == 'quantity' or 'product':
+        if instance.pk:
+            instance.product.quantity -= instance.quantity - sender.get_item(instance.pk).quantity
+            # instance.product.quantity -= instance.quantity - instance.__class__.getitem(instance.pk).quantity
+        else:
+            instance.product.quantity -= instance.quantity
+    instance.product.save()
 
 
 

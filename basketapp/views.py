@@ -14,6 +14,7 @@ def basket(request):
     basket_items = []
     if request.user.is_authenticated:
         basket_items = Basket.objects.filter(user=request.user).order_by('product__category')
+        # basket_items = Basket.objects.select_related('product__category')
 
     context = {
         'basket': basket_items,

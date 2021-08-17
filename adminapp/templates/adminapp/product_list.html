@@ -34,7 +34,7 @@
                         <tbody>
                         {% for product in product_list %}
                             <tr>
-                                <td><a href="{% url 'admin_staff:product_update' product.pk %}" style="color: dodgerblue">{{ product.name }}</a></td>
+                                <td><a href="{% url 'adminapp:product_update' product.pk %}" style="color: dodgerblue">{{ product.name }}</a></td>
                                 <td>{{ user.quantity }}</td>
                                 <td>{{ user.price }}</td>
                                 <td class="text-center">
@@ -45,7 +45,7 @@
                                     {% endif %}
                                 </td>
                                 <td class="text-center">
-                                    <a href="{% url 'admin_staff:product_delete' product.pk %}">Удалить</a>
+                                    <a href="{% url 'adminapp:product_delete' product.pk %}">Удалить</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -55,7 +55,7 @@
             </div>
             <div class="card-footer">
                 <a href="{% url 'adminapp:product_create' category.pk %}">
-                    <button class="btn btn-success">Создать товара</button>
+                    <button class="btn btn-success">Создать товар</button>
                 </a>
             </div>
         </div>

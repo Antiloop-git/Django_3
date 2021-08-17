@@ -17,27 +17,22 @@
                             <tr>
                                 <th class="text-center">Название</th>
                                 <th class="text-center">Описание</th>
+                                <th class="text-center">Редактировать</th>
                                 <th class="text-center">Удалить</th>
                             </tr>
                         </thead>
                         <tfoot>
-                        <tr>
-                            <th class="text-center">Название</th>
-                            <th class="text-center">Описание</th>
-                            <th class="text-center">Редактировать</th>
-                            <th class="text-center">Удалить</th>
-                        </tr>
                         </tfoot>
                         <tbody>
                         {% for cat in objects %}
                             <tr>
-                                <td><a href="{% url 'admin_staff:products' cat.id %}" style="color: dodgerblue">{{ cat.name }}</a></td>
+                                <td><a href="{% url 'adminapp:products' cat.pk %}" style="color: dodgerblue">{{ cat.name }}</a></td>
                                 <td>{{cat.description}}</td>
                                 <td class="text-center">
-                                    <a href="{% url 'admin_staff:category_update' cat.pk %}">Редактировать</a>
+                                    <a href="{% url 'adminapp:category_update' cat.pk %}">Редактировать</a>
                                 </td>
                                 <td class="text-center">
-                                    <a href="{% url 'admin_staff:category_delete' cat.pk %}">Удалить</a>
+                                    <a href="{% url 'adminapp:category_delete' cat.pk %}">Удалить</a>
                                 </td>
                             </tr>
                         {% endfor %}
