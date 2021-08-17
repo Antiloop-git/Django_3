@@ -18,6 +18,8 @@ class ProductCategory(models.Model):
 
     is_delete = models.BooleanField(default=False)
 
+    is_active = models.BooleanField(default=False)
+
     def __str__(self):
         return f'{self.name} - {self.id} -- {self.created}'
 
@@ -71,6 +73,8 @@ class Product(models.Model):
     )
 
     is_delete = models.BooleanField(default=False)
+
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.name} - {self.id} -- {self.created}'
